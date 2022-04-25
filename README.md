@@ -99,4 +99,55 @@ def calculoMediaAritmetica(self):
         mediaAritmetica = sumaValoresObservaciones / n
         return mediaAritmetica
 ```
+# Mediana
+La mediana es el valor que ocupa el lugar central de todos los datos cuando estos están ordenados de menor a mayor.
+Pasos: 
+1º Definimos el método calculoMediana y le pasamos el parámetro self.
+2º Creamos la variable mediana, la igualamos a cero para usarla posteriormente, y la variable característica que se va a encargar de ordenar los valores de menor a mayor. Mediante la función .sort_values(), que además de ordenar los valores de la columna math score. También usaremos .resert_index(drop=True), para que nos resete los índices de cada valor.
+Así es como se vería la variable característica:
+<<<
+0        0
+1        8
+2       18
+3       19
+4       22
+      ...
+995    100
+996    100
+997    100
+998    100
+999    100
+>>>
+3º Volvemos a contar los valores, dado que, al haber creado la variable n dentro del método de la media, no la reconoce. Por eso volvemos a hacer todo de nuevo.
+4º Vamos a calcular la mediana, el problema de la mediana es que debemos de mirar si los datos son pares o impares. Porque si son pares, para calcular el dato de la posición central debemos dividir n/2, lo cual nos dará dos valores que están en dicha posición dependiendo de donde contemos. Así que debemos de hacer la media entre ellos, para calcularnos su valor. Pongamos un ejemplo sencillo, tenemos los siguientes valores:  1, 3, 5, 8, 2, 9. Los ordenamos de menos a mayor:  1, 2, 3, 5, 8, 9. Tenemos 6 datos, entonces el valor de la posición central será el que se encuentre en la posición 3 (6/2). Si empezamos a contar por la izquierda dará que el valor es 3, sin embargo, si empezamos por la derecha el valor será 5. Por ello, se realizará la media de ambos números, (3 + 5) / 2 = 4. Si n es impar tan solo sería hacer la división de n / 2. 
+5º Vemos si el resto es igual a cero, para ver si es par o impar. 
+6º Par: Establece el rango (la posición del valor central) y rangoPython (la posición del valor central en Python, es dicha posición, pero un número menos, dado que el índice de nuestros datos empieza en cero, no en uno). Y buscamos los valores que corresponden a esas posiciones en nuestra columna de notas. Después calculamos la mediana.
+7º Impar: para que nos salga exacto a n le sumamos 1 y lo dividimos entre dos, hallando así la posición del valor central y calculamos como sería en Python, rangoPython.
+8º Este método nos devuelve una lista con la mediana y el rango.
+```
+def calculoMediana(self):
+        mediana = 0
+        caracteristica = self.caracteristica.sort_values() #ordena valores
+        caracteristica = caracteristica.reset_index(drop=True)
+        n = self.caracteristica.count()
+        par = False;
+        if (n % 2 == 0):
+            print("La cantidad de observaciones es par.")
+            par = True
+
+        if par:
+            rango = (n / 2); 
+            print("RANGO = "+str(rango))
+            rangoPython = rango-1 
+            valor1 = caracteristica[rangoPython] 
+            valor2 = caracteristica[rangoPython+1]
+            mediana = valor1 +((valor2-valor1)/2)
+        else:
+            rango = ((n + 1) / 2)
+            rangoPython = rango - 1
+            mediana = caracteristica[rangoPython]
+
+        return [mediana, rango]
+```
+
 
