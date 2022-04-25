@@ -1,8 +1,10 @@
-import pandas as pd
-import numpy as np
+from collections import Counter
+from math import *
+import matplotlib.pyplot as plt
 
-df = pd.read_csv('StudentsPerformance.csv', delimiter= ',', encoding= 'UTF-8' )
-print(df)
-#Separar datos importantes
-df_new = pd.DataFrame({'math score': df['math score'], 'reading score': df['reading score'], 'writing score': df['writing score']})
-print(df_new)
+
+
+class JMPEstadisticas:
+
+    def __init__(self,caracteristica):
+        self.caracteristica = caracteristica #columna notas
