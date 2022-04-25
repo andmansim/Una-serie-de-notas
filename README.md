@@ -71,10 +71,32 @@ stats.analisisCaracteristica()
 ```
 Antes de explicar stats.analisisCaracteristica(), vamos a empezar por el principio de la clase JMPEstadisticas.
 El desarrollo de dicha clase se hará en el fichero clases.py. Comenzaremos escribiendo el nombre de la clase y su constructor.
-````
+```
 class JMPEstadisticas:
     def __init__(self,caracteristica):
         self.caracteristica = caracteristica #columna notas
 ```
 self.caracteristica va a ser el atributo que contenga a la columna df[‘math score’].
+
+# Media aritmética
+La media aritmética es el valor promedio de un conjunto de datos numéricos, en nuestro caso las notas de matemáticas, y se calcula sumando todos los conjuntos de valores y dividiéndolo entre el número total de valores.  
+Pasos: 
+1º Creamos un método llamado calculoMediaAritmetica, con el parámetro self. 
+2º Establecemos una variable n que nos va a contar todos los datos que tenemos en nuestro DataFrame. Esto lo hará mediante la función .count()
+3º Inicializamos las variables sumaValoresObservaciones y mediaAritmetica, las cuales las inicializaremos con un cero para llamarlas más adelante.
+4º Creamos un bucle que nos vaya sumando cada fila de nuestra columna, es decir, que nos sume todas las notas que tenemos y nos guardará el valor final en la variable sumaValoresObservaciones.
+5º Calculamos la media, que es la división de la suma de todas las notas, nuestros valores, y lo dividimos entre el número total de ellos. Lo guardamos en la variable mediaAritmetica.
+6º El método nos devolverá el valor de la media.
+```
+def calculoMediaAritmetica(self):
+
+        n = self.caracteristica.count() # 1000 datos para analizar
+        sumaValoresObservaciones = 0
+        mediaAritmetica = 0
+        for valorObservacion in self.caracteristica:
+            sumaValoresObservaciones = sumaValoresObservaciones + valorObservacion
+
+        mediaAritmetica = sumaValoresObservaciones / n
+        return mediaAritmetica
+```
 
