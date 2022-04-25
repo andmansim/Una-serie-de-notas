@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-import funciones as jmp
+import clases as jmp
 
 df = pd.read_csv('StudentsPerformance.csv', delimiter= ',', encoding= 'UTF-8' )
 print(df)
