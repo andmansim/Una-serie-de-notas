@@ -22,6 +22,7 @@ df = pd.read_csv('StudentsPerformance.csv', delimiter= ',', encoding= 'UTF-8' )
 ``` 
 Creamos una variable que va a ser a la que llamemos cuando queramos trabajar con este fichero CSV. Después ponemos la librería pandas, que hemos nombrado anteriormente como pd, y el .read_csv(‘StudentsPerformance.csv’, delimiter = ‘,’, encoding=’UTF-8’ ). El read_csv es para leer el fichero CSV. Luego ponemos su nombre para poder llamarlo, el delimiter nos indica cómo están separados los parámetros, en este caso será una coma y el enconding es para trasformar todo a UTF-8, para que Python sea capaz de leerlo.
 Si lo ejecutamos obtenemos:
+```
 <<<
      gender race/ethnicity parental level of education  ... math score reading score  writing score
 0    female        group B           bachelor's degree  ...         72            72             74
@@ -36,6 +37,7 @@ Si lo ejecutamos obtenemos:
 998  female        group D                some college  ...         68            78             77
 999  female        group D                some college  ...         77            86             86
 >>>
+```
 (Los tres puntos los pone para no mostrar todos los datos, dado que en este caso son demasiados para enseñarlos por pantalla)
 Podemos observar que tenemos muchas columnas, con el género, grupo, curso, etc. Pero a nosotros nos interesa las notas de todo el centro para poder calcular los datos estadísticos. 
 Crearemos una nueva variable df_new, con solo los datos importantes para la estadística:
@@ -44,6 +46,7 @@ df_new = pd.DataFrame({'math score': df['math score'], 'reading score': df['read
 ``` 
 Usaremos pandas para crear un Dataframe, que es muy útil para el manejo de datos en formato tabla. Para ello se lo debemos pasar los datos como un diccionario, indicando el nombre de las columnas, como 'math score'.
 Obtenemos:
+```
 <<<
      math score  reading score  writing score
 0            72             72             74
@@ -58,3 +61,4 @@ Obtenemos:
 998          68             78             77
 999          77             86             86
 >>>
+```
