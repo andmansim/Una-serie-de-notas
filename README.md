@@ -62,3 +62,19 @@ Obtenemos:
 999          77             86             86
 >>>
 ```
+# Análisis de datos
+Tras esto, comenzaremos a analizar los datos estadísticamente, por ejemplo, de las notas de matemáticas, el math score. Para trabajar con ellas, crearemos una clase llamada JPEstadisticas, con el parámetro df_new[‘math score’], (sabemos que el df_new es el nombre del DataFrame que hemos creado previamente, y los corchetes con el math score, es para indicarle que nos vamos a centrar en la columna math score y que coja los datos de ahí, ignorando el resto del DataFrame. 
+```
+#--- ANALISIS DE UNA CARACTERISTICA ---
+stats = jmp.JMPEstadisticas(df_new['math score'])
+stats.analisisCaracteristica()
+```
+Antes de explicar stats.analisisCaracteristica(), vamos a empezar por el principio de la clase JMPEstadisticas.
+El desarrollo de dicha clase se hará en el fichero clases.py. Comenzaremos escribiendo el nombre de la clase y su constructor.
+````
+class JMPEstadisticas:
+    def __init__(self,caracteristica):
+        self.caracteristica = caracteristica #columna notas
+```
+self.caracteristica va a ser el atributo que contenga a la columna df[‘math score’].
+
