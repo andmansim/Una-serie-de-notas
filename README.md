@@ -166,4 +166,21 @@ def calculoMediana(self):
         return [mediana, rango]
 ```
 
+# Moda
+La moda, es el valor que más se repite de todos nuestros datos. Para calcularlo usaremos Counter, una clase que le pasaremos la columna de math score para que nos agrupe los datos en un diccionario y así podamos ver cuál es el mayor. Pero antes debemos de importar:
+```
+from collections import Counter
+```
+Para poder usarlo. Así creamos el método calculoModa, con el parámetro self y nos devolverá moda, es decir el diccionario con los datos agrupados.
+```
+def calculoModa(self):
+        moda = Counter(self.caracteristica)
+        return moda
+```
+```
+<<<
+Counter({65: 36, 62: 35, 69: 32, 59: 32, 73: 27, 61: 27, 71: 26, 67: 26, 63: 26, 68: 26, 58: 25, 74: 25, 66: 24, 53: 24, 77: 24, 81: 22, 79: 22, 76: 21, 75: 21, 64: 20, 72: 18, 54: 18, 70: 18, 57: 18, 55: 18, 82: 18, 52: 18, 49: 17, 80: 17, 60: 16, 87: 16, 88: 15, 50: 15, 78: 14, 85: 14, 47: 11, 46: 11, 51: 11, 84: 11, 48: 11, 40: 10, 44: 9, 56: 9, 45: 9, 91: 9, 90: 8, 83: 8, 86: 8, 100: 7, 94: 7, 97: 6, 41: 6, 42: 6, 89: 6, 92: 6, 43: 5, 35: 5, 39: 4, 37: 4, 93: 4, 38: 3, 98: 3, 99: 3, 96: 3, 29: 3, 32: 3, 30: 2, 27: 2, 34: 2, 95: 2, 36: 2, 18: 1, 33: 1, 0: 1, 22: 1, 28: 1, 24: 1, 26: 1, 19: 1, 23: 1, 8: 1})
+>>>
+```
+
 
