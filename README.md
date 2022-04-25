@@ -183,4 +183,42 @@ Counter({65: 36, 62: 35, 69: 32, 59: 32, 73: 27, 61: 27, 71: 26, 67: 26, 63: 26,
 >>>
 ```
 
+# Varianza y Desviación típica
+La varianza es una medida de dispersión que representa cuanto varían los datos respecto a la media. Se calcula de la siguiente manera: ∑((valores(math score)- media)^2)/n. A cada valor de math score se le resta la media y se le eleva al cuadrado. Después se suman todos ellos y los dividimos entre el número total de valores.
+La desviación típica es lo mismo que la varianza, pero en vez de ser en valores tan globales, es respecto a algunos en concreto. Para calcularla solo hay que hacer la raíz de la varianza. 
+Pasos: 
+
+1º Definimos el método y ponemos su parámetro self.
+
+2º Calculamos el número total de valores, n. 
+
+3º Calculamos la media aritmética, mediante .mean(), que nos lo hace el propio Python, en la variable mediaAritmetica. Esto es para no tener que llamar a la función que ya nos la calcula. 
+
+4º Inicializamos varianza y c3, siendo ambas igualadas a cero.
+
+5º Hacemos un bucle for, donde a cada valor vemos lo lejos que está de la media, es decir, le restamos la media (en c1), lo multiplicamos por si mismo (c2, esto es lo mismo que elevarlo al cuadrado) y los vamos sumando (c3). 
+
+6º Lo dividimos entre n, recordamos que en Python se tiene en cuenta el cero, por tanto, sería (n – 1), se recoge en la variable varianza.
+
+7º Calculamos la desviación típica, mediante sqrt(varianza), es una función que nos hace la raíz cuadrada de la varianza, obtendremos el valor en la variable desviacionTipica.
+
+8º Nos retorna una lista con la varianza y la desviación típica.
+
+```
+def calculoVarianzaDesviacionTipica(self):
+        n = self.caracteristica.count()
+        mediaAritmetica = self.caracteristica.mean() #media
+        varianza = 0
+        c3 = 0
+        for valorObservacion in self.caracteristica:
+            c1 = valorObservacion - mediaAritmetica
+            c2 = c1 * c1
+            c3 = c3 + c2
+
+        varianza = c3 / (n - 1) # 229.91899799799847
+
+        desviacionTipica = sqrt(varianza) # 15.163080096009468
+
+        return ([varianza, desviacionTipica])
+```
 
