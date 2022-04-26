@@ -276,4 +276,42 @@ def calculoDelosCuartiles(self,mediana,rangoMediana):
 
         return ([q1, q2, q3])
 ```
+# Hallar valores atípicos
+Los valores atípicos son valores extremos que nos modifican bastante nuestros datos estadísticos. En el criterio de Turkey, los calcularemos para marcarlos en el histograma boxplot. El modo de calcularlos es probando todas las diferencias entre medias de los datos.
+Pasos: 
+
+1º Creamos el método criterioDeTukey con sus parámetros self, primerCuartil, tercerCuartil.
+
+2º Creamos listas que contendrán a los valores atípicos inferiores y superiores, (valoresAberrantesInferiores, valoresAberrantesSuperiores).
+
+3º Ordenamos los valores de menor a mayor, calculamos el rango intercualtil, es decir, la diferencia entre el cuartil 3 y el cuartil 1. 
+
+4º El diagrama boxplot, es un diagrama que consiste en una caja que va desde el cuartil 1 al 3, indicando la mediana y marcando con una recta el resto de valores hasta el máximo y el mínimo. Los atípicos se marcan con puntos. Tras esto, calcularemos el límite inferior(mínimo) y superior(máximo) para saber hasta donde representarlo. 
+
+5º Hacemos un bucle for para averiguar que valores son atípicos, lo haremos comparando cada uno de ellos con los límites, tal que, si el valor a comparar es menor que el límite inferior se añadirá a valoresAberrantesInferiores y si el valor a comparar es mayor que el límite superior se añadirá a valoresAberrantesSuperiores.
+
+6º Los valores atípicos/aberrantes se recogerán en una variable que tendrá ambas listas y nos la retornará
+
+````
+def criterioDeTukey(self, primerCuartil, tercerCuartil):
+
+        valoresAberrantesInferiores = []
+        valoresAberrantesSuperiores = []
+        caracteristica = self.caracteristica.sort_values()
+        intercuartil = tercerCuartil - primerCuartil
+        print("Inter-cuartil = "+str(intercuartil))
+        limiteInferior = primerCuartil - (1.5 * intercuartil)
+        limiteSuperior = tercerCuartil + (1.5 * intercuartil)
+
+        for valorObservacion in caracteristica:
+            if valorObservacion < limiteInferior:
+                valoresAberrantesInferiores.append(valorObservacion)
+
+            if valorObservacion > limiteSuperior:
+                valoresAberrantesSuperiores.append(valorObservacion)
+
+        valoresAberrantes = valoresAberrantesInferiores + valoresAberrantesSuperiores
+
+        return (valoresAberrantes)
+```
 
