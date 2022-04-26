@@ -225,4 +225,55 @@ def calculoVarianzaDesviacionTipica(self):
 
         return ([varianza, desviacionTipica])
 ```
+# Cuartiles
+Los cuartiles son valores que dividen un conjunto de datos en cuatro partes iguales. Tenemos el primer cuartil, indica que el 25% de los datos es menor o igual al valor. El segundo cuartil equivale a la mediana, indica el 50% de los datos es menor o igual al valor. Por último, el tercer cuartil, indica el 75% de los datos es menor o igual al valor.
+Pasos:
+
+1º Creamos el método calculoDelosCuartiles con los parámetros self, mediana (le pasamos la mediana calculada previamente) y rangoMediana (es el rango, es decir, el índice con el valor medio de nuestras variables).
+
+2º Ordenamos los datos de menor a mayor y organizamos sus índices. Tal y como hemos hecho en otros métodos. Solo que estos dos últimos se llaman sort_caracteristica en vez de característica.
+
+3º Inicializamos los cuartiles, q1, q2 y q3. q1 y q3 los igualamos a cero, pero q2 = mediana.
+
+4º Calculamos el Q1(cuartil 1). Q1 es el valor que divide a la mitad de nuestros datos, es decir, es el rango / 2. Debemos de ver si este valor es par o impar, si es impar recoge el elemento de la derecha de la mitad de elementos a la izquierda de la mediana. Luego, buscamos el valor de dicha posición en nuestro DataFrame, pero restándole 1 porque empieza en cero.
+Si es par, se recoge los valores de los dos elementos centrales en la parte de la izquierda de la media, y lo calcularíamos de la siguiente manera: q1 = (valorMin + ((valorMax - valorMin) / 2) + valorMax) / 2. (valorMin y valorMax ambos son del 25% donde estamos operando y viendo cuál es su valor).
+
+5º Calculamos el Q3(cuartil 3). Primero debemos calcular la longitud de la lista/datos, que lo haremos mediante la función len() de los valores ordenados y le sumaremos uno. Después miramos cuántos elementos hay a la derecha de la media y lo dividiremos por dos, tomando el resto para ver si es par o impar. Si es impar, haremos el rangoMediana(rango) + nbDatosDesdeMediana (los datos de la mitad de la derecha) / 2 y le restaremos 1 para ajustarlo a Python. Además, usaremos la función ceil () de la librería math para redondear el valor al entero siguiente al valor decimal.
+
+Para tener ceil():
+```
+from math import *
+```
+Si es par, lo haremos de la siguiente manera: q3 = (valorMin + ((valorMax - valorMin) / 2) + valorMax) / 2, (valorMinQ3 y valorMaxQ3 ambos son del 75% donde estamos operando y viendo cuál es su valor)
+```
+def calculoDelosCuartiles(self,mediana,rangoMediana):
+        sort_caracteristica = self.caracteristica.sort_values()
+        sort_caracteristica = sort_caracteristica.reset_index(drop=True)
+        q1 = 0
+        q2 = mediana
+        q3 = 0
+
+        #Cálculo Q1
+        restoDivision = rangoMediana%2
+        if (restoDivision != 0): #impar
+            q1 = sort_caracteristica[((rangoMediana/2)+1)-1]
+        else:
+            valorMin = sort_caracteristica[((rangoMediana/2)-1)]
+            valorMax = sort_caracteristica[(rangoMediana/2)]
+            q1 = (valorMin + ((valorMax - valorMin) / 2) + valorMax) / 2
+
+        # Cálculo Q3
+        nbdatos = len(sort_caracteristica)+1
+        nbDatosDesdeMediana = nbdatos - rangoMediana
+        restoDivision = nbDatosDesdeMediana % 2
+        if (restoDivision != 0): # impar
+            q3 = sort_caracteristica[(rangoMediana+ceil(nbDatosDesdeMediana/2))-1]
+        else:
+            valorMinQ3 = sort_caracteristica[(rangoMediana+(nbDatosDesdeMediana/2))-1]
+            valorMaxQ3 = sort_caracteristica[(rangoMediana+(nbDatosDesdeMediana/2))]
+            q3 = (valorMin + ((valorMax - valorMin) / 2) + valorMax) / 2
+
+
+        return ([q1, q2, q3])
+```
 
