@@ -66,3 +66,33 @@ class JMPEstadisticas:
         desviacionTipica = sqrt(varianza)
 
         return ([varianza, desviacionTipica])
+    
+    def calculoDelosCuartiles(self,mediana,rangoMediana):
+        sort_caracteristica = self.caracteristica.sort_values()
+        sort_caracteristica = sort_caracteristica.reset_index(drop=True)
+        q1 = 0
+        q2 = mediana
+        q3 = 0
+
+        #Cálculo Q1
+        restoDivision = rangoMediana%2
+        if (restoDivision != 0): #impar
+            q1 = sort_caracteristica[((rangoMediana/2)+1)-1]
+        else:
+            valorMin = sort_caracteristica[((rangoMediana/2)-1)]
+            valorMax = sort_caracteristica[(rangoMediana/2)]
+            q1 = (valorMin + ((valorMax - valorMin) / 2) + valorMax) / 2
+
+        # Cálculo Q3
+        nbdatos = len(sort_caracteristica)+1
+        nbDatosDesdeMediana = nbdatos - rangoMediana
+        restoDivision = nbDatosDesdeMediana % 2
+        if (restoDivision != 0): #impar
+            q3 = sort_caracteristica[(rangoMediana+ceil(nbDatosDesdeMediana/2))-1]
+        else:
+            valorMinQ3 = sort_caracteristica[(rangoMediana+(nbDatosDesdeMediana/2))-1]
+            valorMaxQ3 = sort_caracteristica[(rangoMediana+(nbDatosDesdeMediana/2))]
+            q3 = (valorMinQ3 + ((valorMaxQ3 - valorMinQ3) / 2) + valorMaxQ3) / 2
+
+
+        return ([q1, q2, q3])
