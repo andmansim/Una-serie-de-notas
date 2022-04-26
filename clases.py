@@ -144,3 +144,89 @@ class JMPEstadisticas:
         plt.boxplot(self.caracteristica)
         plt.title("Diagrama de caja y bigotes")
         plt.show()
+
+    def analisisCaracteristica(self):
+    
+        print("-----------------------------------------")
+        print("      MEDIDA DE TENDENCIA CENTRAL        ")
+        print("-----------------------------------------\n")
+
+        print("-- CANTIDAD DE OBSERVACIONES --")
+        # -Cantidad de observaciones
+        n = self.caracteristica.count()
+        print("Cantidad de observaciones = " + str(n))
+
+        print ("\n-- MIN --")
+        valoresOrdenados = self.caracteristica.sort_values() #ordena los valores
+        valoresOrdenados = valoresOrdenados.reset_index(drop=True) #a los valores ordenados les resetea el índice
+        print(valoresOrdenados)
+        print("Valor mínimo: "+str(valoresOrdenados[0]))
+
+        print ("\n-- MAX --")
+        valoresOrdenados = self.caracteristica.sort_values()
+        valoresOrdenados = valoresOrdenados.reset_index(drop=True)
+        print("Valor máximo: " + str(valoresOrdenados[len(valoresOrdenados)-1])) # de los totales coge uno menos
+
+        # -Media artimética:
+        print("\n-- MEDIA --")
+        media = self.calculoMediaAritmetica()
+        print("Media aritmética calculada = " + str(media))
+        print("> Observaciones: Si todas las observaciones tuvieran el mismo valor (reparto equitativo), este sería " + str(media))
+
+        # -Media aritmética:
+        print("\n-- MEDIANA --")
+        mediana = self.calculoMediana()
+        print("Mediana calculada = " + str(mediana[0]))
+        print("> Observaciones: El valor que se encuentra en el punto medio de las observaciones es:" + str(mediana[0]))
+        print("El reparto es: " + str(mediana[1]) + " valores en cada lado de la mediana")
+
+        # -Moda
+        print("\n-- MODA --")
+        moda = self.calculoModa()
+        print(moda)
+        print("> Observacions: La moda permite determinar los valores observados con más frecuencia")
+
+
+        print("\n\n-----------------------------------------")
+        print("      MEDIDA DE DISPERSION        ")
+        print("-----------------------------------------\n")
+        print("-- RANGO --")
+        print ("Rango de la serie = "+str(valoresOrdenados[len(valoresOrdenados)-1]-valoresOrdenados[0]))
+        varianzaDesviacionTipica = self.calculoVarianzaDesviacionTipica()
+
+        print("\n-- VARIANZA --")
+        print("Varianza calculada = " + str(varianzaDesviacionTipica[0]))
+
+        print("\n-- DESVIACION TIPICA --")
+        print("Desviación típica calculada = " + str(varianzaDesviacionTipica[1]))
+        desviacionTipica = varianzaDesviacionTipica[1]
+        print("68 % de los valores de las observaciones se sitúan entre " + str(media - desviacionTipica) + " y " + str(
+            media + desviacionTipica))
+        print("95 % de los valores de las observaciones se sitúan entre " + str(media - (desviacionTipica * 2)) + " y " + str(
+            media + (desviacionTipica * 2)))
+        print("99 % de los valores de las observaciones se sitúan entre " + str(media - (desviacionTipica * 3)) + " y " + str(
+            media + (desviacionTipica * 3)))
+
+        print("\n\n-----------------------------------------")
+        print("      CUARTILES        ")
+        print("-----------------------------------------\n")
+        cuartiles = self.calculoDelosCuartiles(mediana[0],mediana[1])
+        print("25 % de las observaciones tienen un valor inferior a " + str(cuartiles[0]))
+        print("50 % de las observaciones tienen un valor inferior a " + str(cuartiles[1]))
+        print("75 % de las observaciones tienen un valor inferior a " + str(cuartiles[2]))
+
+
+        print("\n\n-----------------------------------------")
+        print("      DETECCION VALORES ABERRANTES        ")
+        print("-----------------------------------------\n")
+        print("> Criterios de Tukey")
+        valoresAberrantes = self.criterioDeTukey(cuartiles[0], cuartiles[2])
+        print("Cantidad de valores aberrantes: " + str(len(valoresAberrantes)))
+        print("Valores:" + str(valoresAberrantes))
+
+
+        print("\n\n-----------------------------------------")
+        print("      VISUALIZACION        ")
+        print("-----------------------------------------\n")
+        print("Generación de las gráficas...")
+        self.visualizacion(media,mediana[0],cuartiles[0],cuartiles[1],cuartiles[2])
