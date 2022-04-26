@@ -45,3 +45,24 @@ class JMPEstadisticas:
             mediana = caracteristica[rangoPython]
 
         return [mediana, rango]
+    
+    def calculoModa(self):
+        moda = Counter(self.caracteristica)
+        return moda
+
+    def calculoVarianzaDesviacionTipica(self):
+        n = self.caracteristica.count()
+        mediaAritmetica = self.caracteristica.mean()
+        varianza = 0
+        c3 = 0
+        for valorObservacion in self.caracteristica:
+
+            c1 = valorObservacion - mediaAritmetica
+            c2 = c1 * c1
+            c3 = c3 + c2
+
+        varianza = c3 / (n - 1)
+
+        desviacionTipica = sqrt(varianza)
+
+        return ([varianza, desviacionTipica])
