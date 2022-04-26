@@ -96,3 +96,24 @@ class JMPEstadisticas:
 
 
         return ([q1, q2, q3])
+    
+    def criterioDeTukey(self, primerCuartil, tercerCuartil):
+    
+        valoresAberrantesInferiores = []
+        valoresAberrantesSuperiores = []
+        caracteristica = self.caracteristica.sort_values()
+        intercuartil = tercerCuartil - primerCuartil
+        print("Inter-cuartil = "+str(intercuartil))
+        limiteInferior = primerCuartil - (1.5 * intercuartil)
+        limiteSuperior = tercerCuartil + (1.5 * intercuartil)
+
+        for valorObservacion in caracteristica:
+            if valorObservacion < limiteInferior:
+                valoresAberrantesInferiores.append(valorObservacion)
+
+            if valorObservacion > limiteSuperior:
+                valoresAberrantesSuperiores.append(valorObservacion)
+
+        valoresAberrantes = valoresAberrantesInferiores + valoresAberrantesSuperiores
+
+        return (valoresAberrantes)
