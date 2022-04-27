@@ -23,7 +23,8 @@ df = pd.read_csv('StudentsPerformance.csv', delimiter= ',', encoding= 'UTF-8' )
 ``` 
 Creamos una variable que va a ser a la que llamemos cuando queramos trabajar con este fichero CSV. Después ponemos la librería pandas, que hemos nombrado anteriormente como pd, y el .read_csv(‘StudentsPerformance.csv’, delimiter = ‘,’, encoding=’UTF-8’ ). El read_csv es para leer el fichero CSV. Luego ponemos su nombre para poder llamarlo, el delimiter nos indica cómo están separados los valores de cada columna (en este caso será una coma) y el enconding es para trasformar todo a UTF-8, para que Python sea capaz de leerlo e interpretarlo. Así, ya tenemos los datos del csv en un Dataframe.
 Si lo ejecutamos obtenemos:
-
+```
+<<<
      gender race/ethnicity parental level of education  ... math score reading score  writing score
 0    female        group B           bachelor's degree  ...         72            72             74
 1    female        group C                some college  ...         69            90             88
@@ -36,6 +37,8 @@ Si lo ejecutamos obtenemos:
 997  female        group C                 high school  ...         59            71             65
 998  female        group D                some college  ...         68            78             77
 999  female        group D                some college  ...         77            86             86
+>>>
+```
 
 (Los tres puntos los pone para no mostrar todos los datos, dado que en este caso son demasiados para enseñarlos por pantalla)
 Podemos observar que tenemos muchas columnas, con el género, grupo, curso, etc. Pero a nosotros nos interesa las notas de todo el centro para poder calcular los datos estadísticos. 
@@ -45,6 +48,8 @@ df_new = pd.DataFrame({'math score': df['math score'], 'reading score': df['read
 ``` 
 Usaremos pandas para crear un Dataframe, que es muy útil para el manejo de datos en formato tabla. Para ello se lo debemos pasar los datos como un diccionario, indicando el nombre de las columnas, como 'math score'.
 Obtenemos:
+```
+<<<
      math score  reading score  writing score
 0            72             72             74
 1            69             90             88
@@ -57,7 +62,8 @@ Obtenemos:
 997          59             71             65
 998          68             78             77
 999          77             86             86
-
+>>>
+```
 # Análisis de datos
 Tras esto, comenzaremos a analizar los datos estadísticamente, por ejemplo, de las notas de matemáticas, el math score. Para trabajar con ellas, crearemos una clase llamada JPEstadisticas, con el parámetro df_new[‘math score’], (sabemos que el df_new es el nombre del DataFrame que hemos creado previamente, y los corchetes con el math score, es para indicarle que nos vamos a centrar en la columna math score y que coja los datos de ahí, ignorando el resto del DataFrame. 
 ```
@@ -106,9 +112,13 @@ def calculoMediaAritmetica(self):
 # Mediana
 La mediana es el valor que ocupa el lugar central de todos los datos cuando estos están ordenados de menor a mayor.
 Pasos: 
+
 1º Definimos el método calculoMediana y le pasamos el parámetro self.
+
 2º Creamos la variable mediana, la igualamos a cero para usarla posteriormente, y la variable característica donde guardaremos los valores ordenados de menor a mayor. Ordenamos por la columna math score mediante la función .sort_values(). También usaremos .resert_index(drop=True), para que nos resete los índices de cada valor.
+
 Así es como se vería la variable característica:
+```
 <<<
 0        0
 1        8
@@ -122,7 +132,7 @@ Así es como se vería la variable característica:
 998    100
 999    100
 >>>
-
+```
 3º Volvemos a contar los valores, dado que, al haber creado la variable n dentro del método de la media, no la reconoce. Por eso volvemos a hacer todo de nuevo.
 
 4º Vamos a calcular la mediana, el problema de la mediana es que debemos mirar si el número de datos es par o impar. Si es impar tan solo sería hacer la división de n / 2 y cogemos el elemento que está en esa posición. Pero si es par, si hacemos lo mismo, no obtenemos el valor central, por lo que debemos coger el elemento de la posición n/2 y el n/2 + 1. Y debemos hacer la media entre ellos. Pongamos un ejemplo sencillo, tenemos los siguientes valores:  1, 3, 5, 8, 2, 9. Los ordenamos de menos a mayor:  1, 2, 3, 5, 8, 9. Tenemos 6 datos, los lementos que está en la posición central son el 3 y el 5, que se encuentran en la posición 3 (6/2) y 5 (6/2) + 1. Por ello, se realizará la media de ambos números, (3 + 5) / 2 = 4. 
@@ -332,6 +342,7 @@ Linestyle = estilo de la línea, linewidth= ancho de la línea, media = el valor
 7º Le indicamos el lugar donde debe ir la etiqueta: plt.legend(loc='upper right')
 Los gráficos 2 y 3, también son histogramas pero con los datos de la medina y los cuartiles.
 El gráfico4, es un boxplot, se pone plt.boxplot(). 
+
 8º Al final ponemos un plt.show(), para que nos lo enseñe por pantalla los gráficos. 
 
 ```
@@ -469,7 +480,7 @@ def analisisCaracteristica(self):
 ```
 
 Mostrando todo esto por pantalla:
-
+```
 <<<
      gender race/ethnicity  ... reading score writing score
 0    female        group B  ...            72            74
@@ -561,6 +572,6 @@ Desviación típica calculada = 15.163080096009468
 
 Generación de las gráficas...
 >>>
-
+```
 
 ![notas](notas-clase.jpg)
