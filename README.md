@@ -3,13 +3,14 @@
 Mi dirección de GitHub para este repositorio es la siguiente: [GitHub](https://github.com/andmansim/Una-serie-de-notas.git)
 https://github.com/andmansim/Una-serie-de-notas.git
 
-En este repositorio voy a explicar como analizar datos estadísticamente.
+En este repositorio voy a explicar cómo analizar datos estadísticamente.
 
 # Explicar una serie de notas
-En una clase hay 1000 estudiantes con unas series de notas de los exámenes que hicieron, esos exámenes son matemáticas, expresión escrita y comprensión lectora. Con todos estos datos los vamos a analizar estadísticamente, y se van a explicar cada paso y el porqué de ese procedimiento.
+En una clase hay 1000 estudiantes con unas series de notas de los exámenes que hicieron. Esos exámenes son de matemáticas, de expresión escrita y de comprensión lectora. Con todos estos datos los vamos a analizar estadísticamente, y se van a explicar cada paso y el porqué de ese procedimiento.
+El programa tiene dos ficheros .py con el código para realizar este análisis. Uno es main.py, donde recoge los daos del .csv, llama a la clase JMPestadisticas y al método con el código principal (analisisCaracteristica()).
 
 # Abrir y obtener datos del fichero CSV
-Comenzamos por abrir el fichero .csv en el fichero main, que es un DataSet, lo cual lo sabemos por su gran cantidad de columnas y filas. Para abrirlo, primero necesitamos importar la librería pandas, que la importaremos como pd. 
+Comenzamos por abrir el fichero .csv en el fichero main, que es un DataSet, con gran cantidad de columnas y filas. Para abrirlo, primero necesitamos importar la librería pandas, que la importaremos como pd. 
 ```
 import pandas as pd
 ``` 
@@ -20,7 +21,7 @@ Primero debemos de leer el DataSet, para ello lo haremos de la siguiente manera:
 ```
 df = pd.read_csv('StudentsPerformance.csv', delimiter= ',', encoding= 'UTF-8' )
 ``` 
-Creamos una variable que va a ser a la que llamemos cuando queramos trabajar con este fichero CSV. Después ponemos la librería pandas, que hemos nombrado anteriormente como pd, y el .read_csv(‘StudentsPerformance.csv’, delimiter = ‘,’, encoding=’UTF-8’ ). El read_csv es para leer el fichero CSV. Luego ponemos su nombre para poder llamarlo, el delimiter nos indica cómo están separados los parámetros, en este caso será una coma y el enconding es para trasformar todo a UTF-8, para que Python sea capaz de leerlo.
+Creamos una variable que va a ser a la que llamemos cuando queramos trabajar con este fichero CSV. Después ponemos la librería pandas, que hemos nombrado anteriormente como pd, y el .read_csv(‘StudentsPerformance.csv’, delimiter = ‘,’, encoding=’UTF-8’ ). El read_csv es para leer el fichero CSV. Luego ponemos su nombre para poder llamarlo, el delimiter nos indica cómo están separados los valores de cada columna (en este caso será una coma) y el enconding es para trasformar todo a UTF-8, para que Python sea capaz de leerlo e interpretarlo. Así, ya tenemos los datos del csv en un Dataframe.
 Si lo ejecutamos obtenemos:
 
      gender race/ethnicity parental level of education  ... math score reading score  writing score
@@ -38,7 +39,7 @@ Si lo ejecutamos obtenemos:
 
 (Los tres puntos los pone para no mostrar todos los datos, dado que en este caso son demasiados para enseñarlos por pantalla)
 Podemos observar que tenemos muchas columnas, con el género, grupo, curso, etc. Pero a nosotros nos interesa las notas de todo el centro para poder calcular los datos estadísticos. 
-Crearemos una nueva variable df_new, con solo los datos importantes para la estadística:
+Crearemos una nueva variable df_new, que será otro Dataframe, pero solo con los datos importantes para la estadística:
 ```
 df_new = pd.DataFrame({'math score': df['math score'], 'reading score': df['reading score'], 'writing score': df['writing score']})
 ``` 
@@ -105,11 +106,8 @@ def calculoMediaAritmetica(self):
 # Mediana
 La mediana es el valor que ocupa el lugar central de todos los datos cuando estos están ordenados de menor a mayor.
 Pasos: 
-
 1º Definimos el método calculoMediana y le pasamos el parámetro self.
-
-2º Creamos la variable mediana, la igualamos a cero para usarla posteriormente, y la variable característica que se va a encargar de ordenar los valores de menor a mayor. Mediante la función .sort_values(), que además de ordenar los valores de la columna math score. También usaremos .resert_index(drop=True), para que nos resete los índices de cada valor.
-
+2º Creamos la variable mediana, la igualamos a cero para usarla posteriormente, y la variable característica donde guardaremos los valores ordenados de menor a mayor. Ordenamos por la columna math score mediante la función .sort_values(). También usaremos .resert_index(drop=True), para que nos resete los índices de cada valor.
 Así es como se vería la variable característica:
 <<<
 0        0
@@ -127,7 +125,7 @@ Así es como se vería la variable característica:
 
 3º Volvemos a contar los valores, dado que, al haber creado la variable n dentro del método de la media, no la reconoce. Por eso volvemos a hacer todo de nuevo.
 
-4º Vamos a calcular la mediana, el problema de la mediana es que debemos de mirar si los datos son pares o impares. Porque si son pares, para calcular el dato de la posición central debemos dividir n/2, lo cual nos dará dos valores que están en dicha posición dependiendo de donde contemos. Así que debemos de hacer la media entre ellos, para calcularnos su valor. Pongamos un ejemplo sencillo, tenemos los siguientes valores:  1, 3, 5, 8, 2, 9. Los ordenamos de menos a mayor:  1, 2, 3, 5, 8, 9. Tenemos 6 datos, entonces el valor de la posición central será el que se encuentre en la posición 3 (6/2). Si empezamos a contar por la izquierda dará que el valor es 3, sin embargo, si empezamos por la derecha el valor será 5. Por ello, se realizará la media de ambos números, (3 + 5) / 2 = 4. Si n es impar tan solo sería hacer la división de n / 2. 
+4º Vamos a calcular la mediana, el problema de la mediana es que debemos mirar si el número de datos es par o impar. Si es impar tan solo sería hacer la división de n / 2 y cogemos el elemento que está en esa posición. Pero si es par, si hacemos lo mismo, no obtenemos el valor central, por lo que debemos coger el elemento de la posición n/2 y el n/2 + 1. Y debemos hacer la media entre ellos. Pongamos un ejemplo sencillo, tenemos los siguientes valores:  1, 3, 5, 8, 2, 9. Los ordenamos de menos a mayor:  1, 2, 3, 5, 8, 9. Tenemos 6 datos, los lementos que está en la posición central son el 3 y el 5, que se encuentran en la posición 3 (6/2) y 5 (6/2) + 1. Por ello, se realizará la media de ambos números, (3 + 5) / 2 = 4. 
 
 5º Vemos si el resto es igual a cero, para ver si es par o impar. 
 
@@ -163,7 +161,7 @@ def calculoMediana(self):
 ```
 
 # Moda
-La moda, es el valor que más se repite de todos nuestros datos. Para calcularlo usaremos Counter, una clase que le pasaremos la columna de math score para que nos agrupe los datos en un diccionario y así podamos ver cuál es el mayor. Pero antes debemos de importar:
+La moda, es el valor que más se repite de todos nuestros datos. Para calcularlo usaremos Counter, una clase que le pasaremos la columna de math score para que nos agrupe los datos en un diccionario contando las veces que se repite cada valor. Así podremos luego recoger el valor más alto, que sería el que se repita más veces. Pero antes debemos de importar:
 ```
 from collections import Counter
 ```
@@ -180,8 +178,8 @@ Counter({65: 36, 62: 35, 69: 32, 59: 32, 73: 27, 61: 27, 71: 26, 67: 26, 63: 26,
 ```
 
 # Varianza y Desviación típica
-La varianza es una medida de dispersión que representa cuanto varían los datos respecto a la media. Se calcula de la siguiente manera: ∑(valores(math score)- media)^2/n. A cada valor de math score se le resta la media y se le eleva al cuadrado. Después se suman todos ellos y los dividimos entre el número total de valores.
-La desviación típica es lo mismo que la varianza, pero en vez de ser en valores tan globales, es respecto a algunos en concreto. Para calcularla solo hay que hacer la raíz de la varianza. 
+La varianza es una medida de dispersión que representa cuanto varían los datos respecto a la media. Si tenemos datos muy por encima y muy por debajo de la media, esta será menos representativa y lo veremos reflejado en una elevada varianza. Se calcula de la siguiente manera: ∑((valores(math score)- media)^2)/n. A cada valor de math score se le resta la media y se le eleva al cuadrado. Después se suman todos ellos y los dividimos entre el número total de valores.
+La desviación típica mide lo mismo que la varianza. Para calcularla solo hay que hacer la raíz de la varianza. 
 Pasos: 
 
 1º Definimos el método y ponemos su parámetro self.
@@ -270,7 +268,7 @@ def calculoDelosCuartiles(self,mediana,rangoMediana):
         return ([q1, q2, q3])
 ```
 # Hallar valores atípicos
-Los valores atípicos son valores extremos que nos modifican bastante nuestros datos estadísticos. En el criterio de Turkey, los calcularemos para marcarlos en el histograma boxplot. El modo de calcularlos es probando todas las diferencias entre medias de los datos.
+Los valores atípicos son valores extremos que nos modifican bastante nuestros datos estadísticos. En el criterio de Turkey, los calcularemos para marcarlos en el histograma boxplot. El modo de identificarlos es viendo si son muy inferiores al primero cuartil o están muy por encima del tercer cuartil.
 Pasos: 
 
 1º Creamos el método criterioDeTukey con sus parámetros self, primerCuartil, tercerCuartil.
@@ -328,14 +326,13 @@ Pasos:
 
 5º Ponemos el título del histograma: plt.title("Histograma y media")
 
-6º Pintamos una línea roja, que indica el valor de la media con una etiqueta: plt.axvline(media, color='red', linestyle='dashed', linewidth=1,label = str(media))
+6º Pintamos una línea roja, que indica el valor de la media y ponemos una etiqueta con su valor: plt.axvline(media, color='red', linestyle='dashed', linewidth=1,label = str(media))
 Linestyle = estilo de la línea, linewidth= ancho de la línea, media = el valor de la media, label = lo que debe poner en la etiqueta, color = el color de la línea.
 
 7º Le indicamos el lugar donde debe ir la etiqueta: plt.legend(loc='upper right')
-
-Con el resto de histogramas sería igual, salvo cambiando el nombre, el color y el número de gráfico.
-El que cambia más es el de boxplot, que en el paso 4º, en vez de plt.hist(), se pone plt.boxplot(), al igual que no hay línea. 
-8º Al final ponemos un plt.show(), para que nos lo enseñe por pantalla. 
+Los gráficos 2 y 3, también son histogramas pero con los datos de la medina y los cuartiles.
+El gráfico4, es un boxplot, se pone plt.boxplot(). 
+8º Al final ponemos un plt.show(), para que nos lo enseñe por pantalla los gráficos. 
 
 ```
 def visualizacion(self, media,mediana,cuartil_1,cuartil_2,cuartil_3):
@@ -369,7 +366,7 @@ def visualizacion(self, media,mediana,cuartil_1,cuartil_2,cuartil_3):
 
 # Código principal
 Si nos vamos al principio de este documento, hemos explicado el código principal, el main. Pero hasta ahora solo hemos hablado de la clase JMPEstadisticas, por eso es el momento que expliquemos la segunda parte, es decir, stats.analisisCaracteristica().
-Aquí el main llama a un método de la clase JMPEstadisticas, que realiza la llamada a todos los métodos de la clase, es decir, es el código principal. 
+Aquí el main llama a un método de la clase JMPEstadisticas, que realiza la llamada a todos los métodos de la clase, para calcular y pintar los valores estadísticos (stats.analisisCaracteristica). 
 En este método, nos mostrará:
 	El número de datos/filas
 	El mínimo, donde ordenamos los valores de menor a mayor, reorganizamos sus índices y cogemos el valor de la fila cero.
