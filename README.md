@@ -564,6 +564,6 @@ Desviación típica calculada = 15.163080096009468
 
 Generación de las gráficas...
 >>>
-```
 
 
+![notas](notas-clase.jpg)
